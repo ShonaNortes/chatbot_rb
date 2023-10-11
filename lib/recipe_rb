@@ -19,8 +19,8 @@ headers = {
 
 # Données de la requête
 data = {
-  "prompt" => "5 parfums de glace",
-  "max_tokens" => 10,
+  "prompt" => "Donne moi une recette de cuisine aléatoire",
+  "max_tokens" => 50,
   "n" => 1,
   "stop" => ["\n"],
   "temperature" => 0.5
@@ -29,10 +29,12 @@ data = {
 # Fonction pour envoyer la requête à l'API OpenAI
 def send_request(url, headers, data)
   response = HTTP.post(url, headers: headers, body: data.to_json)
+
   if response.status.success?
     response_body = JSON.parse(response.body.to_s)
     if response_body['choices'] && response_body['choices'][0] && response_body['choices'][0]['text']
       response_string = response_body['choices'][0]['text'].strip
+      puts "Hello, voici 1 rcette de cuisine aléatoire :"
       return response_string
     else
       return nil
